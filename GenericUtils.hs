@@ -2,6 +2,8 @@ import Control.Monad
 import Control.Arrow
 
 -- | Double composition
+(|>) = flip ($)
+(<.) = flip (.)
 (<..) = (.) . (.)
 (..>) = flip (<..)
 
@@ -14,7 +16,6 @@ bothAndMerge  f g h = f &&& g >>> arr (uncurry h)
 (|.|) f g = bothAndMerge f g (||)
 
 compareWith f x y = compare (f x) (f y)
-
 
 splitEvery _ [] = []
 splitEvery 0 ls = [ls]
