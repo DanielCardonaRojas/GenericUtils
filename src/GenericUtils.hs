@@ -1,3 +1,5 @@
+module GenericUtils where
+
 import Control.Monad
 import Control.Arrow
 import Control.Applicative
@@ -40,9 +42,14 @@ toSingleton = maybe [] (:[])
 iff p f g = \x -> if p x then f x else g x
 
 ----------- Function Combinators -------------
-applyNTimes n = (!! n) . iterate
+applyNTimes n f = (!! n) . iterate f
 
 ---------- Generalized Zipping --------------
+zipWith' :: Applicative f => (a -> b -> c) -> f a -> f b -> f c
 zipWith' = liftA2
+
+zip' :: Applicative f => f a -> f b -> f (a,b)
 zip' = zipWith' (,)
+
+unzip' :: Functor f => f (a,b) -> (f a, f b)
 unzip' = fmap fst &&& fmap snd

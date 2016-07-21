@@ -1,6 +1,6 @@
 module Main where
 
-import Lib
+import GenericUtils
 
 main :: IO ()
-main = someFunc
+main = putStrLn "Hello world"
