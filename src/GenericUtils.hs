@@ -44,6 +44,9 @@ iff p f g = \x -> if p x then f x else g x
 ----------- Function Combinators -------------
 applyNTimes n f = (!! n) . iterate f
 
+fmap2 :: (Functor f , Functor g) => (a -> b) -> f (g a) -> f (g b)
+fmap2 = fmap . fmap
+
 ---------- Generalized Zipping --------------
 zipWith' :: Applicative f => (a -> b -> c) -> f a -> f b -> f c
 zipWith' = liftA2
