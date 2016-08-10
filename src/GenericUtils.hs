@@ -15,6 +15,9 @@ bothAndMerge  f g h = f &&& g >>> arr (uncurry h)
 
 -------------- Logic Operator --------------
 -- | Higher order logic operators
+-- An alternative definition based on monoid would be 
+-- (&.&) = getAll (fmap All f <> fmap All g)
+-- (&.&) f g =  getAll . foldMap (All .) [f,g]
 (&.&) f g = bothAndMerge f g (&&)
 (|.|) f g = bothAndMerge f g (||)
 
@@ -38,7 +41,11 @@ toSingleton = maybe [] (:[])
 
 ------------ Control Combinators  ------------
 -- Ex: iff ((> 3) &.& even) (+ 2) (* 3) 4
+-- data Person = Person {name :: String, age :: Int} deriving (Show,Eq)
+-- Ex: (age `is` even) &.& (name `is` palindrome) where palindrome x = x == reverse x
 -- In contrast with \x -> if x > 3 && even x then x + 2 else x * 3
+is :: (t -> a) -> (a -> Bool) -> t -> Bool
+is = (.>)
 iff p f g = \x -> if p x then f x else g x
 
 ----------- Function Combinators -------------
