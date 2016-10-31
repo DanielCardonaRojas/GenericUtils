@@ -6,7 +6,8 @@ import Control.Applicative
 
 -- | Double composition
 (|>) = flip ($)
-(<.) = flip (.)
+(<.) = (.)
+(.>) = flip (.)
 (<..) = (.) . (.)
 (..>) = flip (<..)
 
@@ -45,7 +46,8 @@ toSingleton = maybe [] (:[])
 -- Ex: (age `is` even) &.& (name `is` palindrome) where palindrome x = x == reverse x
 -- In contrast with \x -> if x > 3 && even x then x + 2 else x * 3
 is :: (t -> a) -> (a -> Bool) -> t -> Bool
-is = (.>)
+is = flip (.)
+
 iff p f g = \x -> if p x then f x else g x
 
 ----------- Function Combinators -------------
